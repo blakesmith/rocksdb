@@ -311,6 +311,13 @@ public class RocksDBTest {
   }
 
   @Test
+  public void deleteFilesInRange() throws RocksDBException {
+    try (final RocksDB db = RocksDB.open(dbFolder.getRoot().getAbsolutePath())) {
+      db.deleteFilesInRange("startKey".getBytes(), "endKey".getBytes(), true);
+    }
+  }
+
+  @Test
   public void getIntProperty() throws RocksDBException {
     try (
         final Options options = new Options()

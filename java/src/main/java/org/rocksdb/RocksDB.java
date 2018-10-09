@@ -1435,6 +1435,12 @@ public class RocksDB extends RocksObject {
         endKey.length, columnFamilyHandle.nativeHandle_);
   }
 
+  public void deleteFilesInRange(final byte[] beginKey,
+      final byte[] endKey, final boolean includeEnd) throws RocksDBException {
+    deleteFilesInRange(nativeHandle_, beginKey, 0, beginKey.length, endKey, 0, endKey.length,
+        includeEnd);
+  }
+
   /**
    * DB implementations can export properties about their state
    * via this method.  If "property" is a valid property understood by this
@@ -2400,6 +2406,9 @@ public class RocksDB extends RocksObject {
   protected native void deleteRange(long handle, long writeOptHandle, byte[] beginKey,
       int beginKeyOffset, int beginKeyLength, byte[] endKey, int endKeyOffset, int endKeyLength,
       long cfHandle) throws RocksDBException;
+  protected native void deleteFilesInRange(long handle, byte[] beginKey, int beginKeyOffset,
+      int beginKeyLength, byte[] endKey, int endKeyOffset, int endKeyLength,
+      boolean includeEnd) throws RocksDBException;
   protected native String getProperty0(long nativeHandle,
       String property, int propertyLength) throws RocksDBException;
   protected native String getProperty0(long nativeHandle, long cfHandle,
